@@ -3,488 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palm Hôtel & Spa - Contact</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Palm Hotel - Assistant IA</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #0a3d2c 0%, #165a42 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        
-        .container {
-            background: #ffffff;
-            border-radius: 0;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
-            max-width: 550px;
+
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             width: 100%;
+            max-width: 600px;
             overflow: hidden;
         }
-        
-        .header-banner {
-            background: linear-gradient(135deg, #0a3d2c 0%, #165a42 100%);
-            padding: 40px 30px;
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
             text-align: center;
-            position: relative;
         }
-        
-        .logo-container {
-            margin-bottom: 15px;
-        }
-        
-        .logo-text {
-            font-family: 'Playfair Display', serif;
-            color: #d4af37;
-            font-size: 42px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+
+        .chat-header h1 {
+            font-size: 24px;
             margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        
-        .logo-subtitle {
-            font-family: 'Montserrat', sans-serif;
-            color: #ffffff;
+
+        .chat-header p {
             font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
             margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
         }
-        
-        .tagline {
-            font-family: 'Playfair Display', serif;
-            color: #d4af37;
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: 4px;
-            font-style: italic;
-            margin-top: 10px;
-            opacity: 0.95;
+
+        .message.user {
+            align-items: flex-end;
         }
-        
-        .palm-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+
+        .message.bot {
+            align-items: flex-start;
         }
-        
-        .content-area {
-            padding: 40px;
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            word-wrap: break-word;
         }
-        
-        .language-selector {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 0;
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
-        
-        .language-btn {
-            background: #ffffff;
-            border: 2px solid #e8e8e8;
-            border-radius: 8px;
-            padding: 25px 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        
-        .language-btn:hover {
-            border-color: #d4af37;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+            padding: 0 5px;
         }
-        
-        .language-btn.selected {
-            border-color: #0a3d2c;
-            background: #f8f9f5;
-        }
-        
-        .language-btn .flag {
-            font-size: 52px;
-            margin-bottom: 12px;
-            display: block;
-        }
-        
-        .language-btn .name {
-            font-size: 15px;
-            font-weight: 600;
-            color: #0a3d2c;
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        .message-form {
+
+        .typing-indicator {
             display: none;
+            padding: 12px 18px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: fit-content;
         }
-        
-        .message-form.active {
+
+        .typing-indicator.active {
             display: block;
-            animation: fadeIn 0.5s ease-out;
         }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background: #999;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
                 transform: translateY(0);
             }
+            30% {
+                transform: translateY(-10px);
+            }
         }
-        
-        .form-header {
-            text-align: center;
-            margin-bottom: 30px;
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
         }
-        
-        .form-header h2 {
-            font-family: 'Playfair Display', serif;
-            color: #0a3d2c;
-            font-size: 26px;
-            margin-bottom: 10px;
-            font-weight: 600;
+
+        .chat-input-form {
+            display: flex;
+            gap: 10px;
         }
-        
-        .form-header p {
-            color: #666;
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
             font-size: 14px;
-            font-weight: 300;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
-            display: block;
-            color: #0a3d2c;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e8e8e8;
-            border-radius: 4px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-            resize: vertical;
-            min-height: 160px;
-            color: #333;
-        }
-        
-        textarea:focus {
             outline: none;
-            border-color: #d4af37;
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+            transition: border-color 0.3s;
         }
-        
-        textarea::placeholder {
-            color: #999;
+
+        .chat-input:focus {
+            border-color: #667eea;
         }
-        
-        button {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #0a3d2c 0%, #165a42 100%);
-            color: #ffffff;
+
+        .send-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 600;
+            padding: 12px 25px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        
-        button:hover {
+
+        .send-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(10, 61, 44, 0.3);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        
-        button:active {
+
+        .send-button:active {
             transform: translateY(0);
         }
-        
-        button:disabled {
+
+        .send-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
-        
-        .back-btn {
-            background: #f5f5f5;
-            color: #0a3d2c;
-            margin-bottom: 15px;
-            border: 2px solid #e8e8e8;
-        }
-        
-        .back-btn:hover {
-            background: #e8e8e8;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .success-message {
-            display: none;
-            background: #0a3d2c;
-            color: #d4af37;
-            padding: 18px;
-            border-radius: 4px;
-            text-align: center;
-            margin-top: 20px;
-            font-weight: 500;
-            animation: slideIn 0.5s ease-out;
-        }
-        
+
         .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 20px;
+            font-size: 13px;
             display: none;
-            background: #8b0000;
-            color: white;
-            padding: 18px;
-            border-radius: 4px;
-            text-align: center;
-            margin-top: 20px;
-            font-weight: 500;
-            animation: slideIn 0.5s ease-out;
         }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .content-area {
-                padding: 30px 25px;
-            }
-            
-            .header-banner {
-                padding: 30px 20px;
-            }
-            
-            .logo-text {
-                font-size: 32px;
-            }
-            
-            .tagline {
-                font-size: 14px;
-                letter-spacing: 3px;
-            }
-            
-            .language-selector {
-                grid-template-columns: 1fr;
-            }
+
+        .error-message.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-banner">
-            <div class="logo-container">
-                <div class="palm-icon">🌴</div>
-                <div class="logo-text">PALM</div>
-                <div class="logo-subtitle">Hôtel & Spa</div>
-                <div class="tagline">ÉLÉGANCE & SÉRÉNITÉ</div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🏨 Palm Hotel</h1>
+            <p>Assistant virtuel - Posez vos questions</p>
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                <div class="message-content">
+                    Bonjour ! Je suis l'assistant virtuel du Palm Hotel. Comment puis-je vous aider aujourd'hui ?
+                </div>
+                <div class="message-time" id="welcome-time"></div>
+            </div>
+            <div class="typing-indicator" id="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
-        
-        <div class="content-area">
-            <!-- Sélection de langue -->
-            <div id="languageSelection">
-                <div class="language-selector">
-                    <div class="language-btn" onclick="selectLanguage('fr')">
-                        <span class="flag">🇫🇷</span>
-                        <div class="name">Français</div>
-                    </div>
-                    <div class="language-btn" onclick="selectLanguage('en')">
-                        <span class="flag">🇬🇧</span>
-                        <div class="name">English</div>
-                    </div>
-                    <div class="language-btn" onclick="selectLanguage('es')">
-                        <span class="flag">🇪🇸</span>
-                        <div class="name">Español</div>
-                    </div>
-                    <div class="language-btn" onclick="selectLanguage('de')">
-                        <span class="flag">🇩🇪</span>
-                        <div class="name">Deutsch</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Formulaire de message -->
-            <div id="messageForm" class="message-form">
-                <div class="form-header">
-                    <h2 id="formTitle">Comment pouvons-nous vous aider ?</h2>
-                    <p id="formSubtitle">Posez-nous votre question</p>
-                </div>
-                
-                <form id="contactForm">
-                    <input type="hidden" id="selectedLanguage" name="language">
-                    
-                    <div class="form-group">
-                        <label for="message" id="messageLabel">Votre question</label>
-                        <textarea id="message" name="message" placeholder="Décrivez votre demande..." required></textarea>
-                    </div>
-                    
-                    <button type="button" class="back-btn" onclick="backToLanguages()" id="backBtn">← Retour</button>
-                    <button type="submit" id="submitBtn">Envoyer</button>
-                </form>
-                
-                <div class="success-message" id="successMessage">
-                    ✓ Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.
-                </div>
-                
-                <div class="error-message" id="errorMessage">
-                    ✗ Une erreur s'est produite. Veuillez réessayer.
-                </div>
-            </div>
+
+        <div class="chat-input-container">
+            <form class="chat-input-form" id="chat-form">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="user-input" 
+                    placeholder="Tapez votre question ici..."
+                    autocomplete="off"
+                    required
+                >
+                <button type="submit" class="send-button" id="send-button">
+                    Envoyer
+                </button>
+            </form>
         </div>
     </div>
 
     <script>
-        const translations = {
-            fr: {
-                title: "Comment pouvons-nous vous aider ?",
-                subtitle: "Posez-nous votre question",
-                label: "Votre question",
-                placeholder: "Décrivez votre demande...",
-                back: "← Retour",
-                submit: "Envoyer",
-                sending: "Envoi en cours...",
-                success: "✓ Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.",
-                error: "✗ Une erreur s'est produite. Veuillez réessayer."
-            },
-            en: {
-                title: "How can we help you?",
-                subtitle: "Ask us your question",
-                label: "Your question",
-                placeholder: "Describe your request...",
-                back: "← Back",
-                submit: "Send",
-                sending: "Sending...",
-                success: "✓ Your message has been sent successfully! We will respond soon.",
-                error: "✗ An error occurred. Please try again."
-            },
-            es: {
-                title: "¿Cómo podemos ayudarle?",
-                subtitle: "Háganos su pregunta",
-                label: "Su pregunta",
-                placeholder: "Describa su solicitud...",
-                back: "← Volver",
-                submit: "Enviar",
-                sending: "Enviando...",
-                success: "✓ ¡Su mensaje ha sido enviado con éxito! Le responderemos pronto.",
-                error: "✗ Se produjo un error. Por favor, inténtelo de nuevo."
-            },
-            de: {
-                title: "Wie können wir Ihnen helfen?",
-                subtitle: "Stellen Sie uns Ihre Frage",
-                label: "Ihre Frage",
-                placeholder: "Beschreiben Sie Ihre Anfrage...",
-                back: "← Zurück",
-                submit: "Senden",
-                sending: "Wird gesendet...",
-                success: "✓ Ihre Nachricht wurde erfolgreich gesendet! Wir werden bald antworten.",
-                error: "✗ Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+        // Configuration
+        const WEBHOOK_URL = 'https://kirusshi.app.n8n.cloud/webhook-test/717db553-cb95-40bf-b8f4-eb3150989816';
+        
+        // Éléments DOM
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatMessages = document.getElementById('chat-messages');
+        const sendButton = document.getElementById('send-button');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const errorMessage = document.getElementById('error-message');
+
+        // Afficher l'heure de bienvenue
+        document.getElementById('welcome-time').textContent = getCurrentTime();
+
+        // Fonction pour obtenir l'heure actuelle
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Fonction pour ajouter un message
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = content;
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = getCurrentTime();
+            
+            messageDiv.appendChild(contentDiv);
+            messageDiv.appendChild(timeDiv);
+            
+            // Insérer avant l'indicateur de frappe
+            chatMessages.insertBefore(messageDiv, typingIndicator);
+            
+            // Scroll vers le bas
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Fonction pour afficher/masquer l'indicateur de frappe
+        function setTyping(isTyping) {
+            if (isTyping) {
+                typingIndicator.classList.add('active');
+            } else {
+                typingIndicator.classList.remove('active');
             }
-        };
-        
-        let currentLanguage = '';
-        
-        function selectLanguage(lang) {
-            currentLanguage = lang;
-            document.getElementById('selectedLanguage').value = lang;
-            
-            const t = translations[lang];
-            document.getElementById('formTitle').textContent = t.title;
-            document.getElementById('formSubtitle').textContent = t.subtitle;
-            document.getElementById('messageLabel').textContent = t.label;
-            document.getElementById('message').placeholder = t.placeholder;
-            document.getElementById('backBtn').textContent = t.back;
-            document.getElementById('submitBtn').textContent = t.submit;
-            
-            document.getElementById('languageSelection').style.display = 'none';
-            document.getElementById('messageForm').classList.add('active');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-        
-        function backToLanguages() {
-            document.getElementById('messageForm').classList.remove('active');
-            document.getElementById('languageSelection').style.display = 'block';
-            document.getElementById('contactForm').reset();
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
+
+        // Fonction pour afficher une erreur
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('active');
+            setTimeout(() => {
+                errorMessage.classList.remove('active');
+            }, 5000);
         }
-        
-        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+
+        // Gestion de l'envoi du formulaire
+        chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const submitBtn = document.getElementById('submitBtn');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            const form = e.target;
-            const t = translations[currentLanguage];
+            const question = userInput.value.trim();
+            if (!question) return;
             
-            submitBtn.disabled = true;
-            submitBtn.textContent = t.sending;
+            // Ajouter le message de l'utilisateur
+            addMessage(question, true);
             
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
+            // Vider l'input
+            userInput.value = '';
             
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
+            // Désactiver le bouton et afficher l'indicateur de frappe
+            sendButton.disabled = true;
+            setTyping(true);
             
             try {
-                const response = await fetch('https://kirusshi.app.n8n.cloud/webhook-test/717db553-cb95-40bf-b8f4-eb3150989816', {
+                const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({ message: question })
                 });
                 
-                if (response.ok) {
-                    successMessage.textContent = t.success;
-                    successMessage.style.display = 'block';
-                    form.reset();
-                } else {
-                    errorMessage.textContent = t.error;
-                    errorMessage.style.display = 'block';
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
                 }
+                
+                const data = await response.json();
+                
+                // Masquer l'indicateur de frappe
+                setTyping(false);
+                
+                // Ajouter la réponse du bot
+                if (data.response) {
+                    addMessage(data.response, false);
+                } else {
+                    throw new Error('Réponse invalide du serveur');
+                }
+                
             } catch (error) {
-                errorMessage.textContent = t.error;
-                errorMessage.style.display = 'block';
+                console.error('Erreur:', error);
+                setTyping(false);
+                showError('Désolé, une erreur est survenue. Veuillez réessayer.');
+                addMessage('Désolé, je rencontre un problème technique. Veuillez réessayer dans quelques instants.', false);
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = t.submit;
+                // Réactiver le bouton
+                sendButton.disabled = false;
+                userInput.focus();
             }
         });
+
+        // Focus automatique sur l'input au chargement
+        userInput.focus();
     </script>
 </body>
 </html>
