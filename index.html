@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactez-nous - Support Client</title>
+    <title>Palm Hôtel et Spa - Contact</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -42,14 +42,89 @@
             }
         }
         
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #1a5f3f;
+            font-size: 32px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        
+        .logo p {
+            color: #2d8659;
+            font-size: 16px;
+            font-style: italic;
+        }
+        
+        .language-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .language-btn {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .language-btn:hover {
+            border-color: #2d8659;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(45, 134, 89, 0.2);
+        }
+        
+        .language-btn.selected {
+            border-color: #1a5f3f;
+            background: #f0f8f4;
+        }
+        
+        .language-btn .flag {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .language-btn .name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .message-form {
+            display: none;
+        }
+        
+        .message-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
         .header {
             text-align: center;
             margin-bottom: 30px;
         }
         
-        .header h1 {
-            color: #333;
-            font-size: 28px;
+        .header h2 {
+            color: #1a5f3f;
+            font-size: 24px;
             margin-bottom: 10px;
         }
         
@@ -70,36 +145,28 @@
             font-size: 14px;
         }
         
-        input, textarea, select {
+        textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 15px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 15px;
             transition: all 0.3s ease;
             font-family: inherit;
-        }
-        
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 150px;
         }
         
-        select {
-            cursor: pointer;
-            background-color: white;
+        textarea:focus {
+            outline: none;
+            border-color: #2d8659;
+            box-shadow: 0 0 0 3px rgba(45, 134, 89, 0.1);
         }
         
         button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 100%);
             color: white;
             border: none;
             border-radius: 10px;
@@ -111,7 +178,7 @@
         
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 20px rgba(26, 95, 63, 0.3);
         }
         
         button:active {
@@ -121,6 +188,17 @@
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+        }
+        
+        .back-btn {
+            background: #e0e0e0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .back-btn:hover {
+            background: #d0d0d0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .success-message {
@@ -145,69 +223,155 @@
             animation: slideIn 0.5s ease-out;
         }
         
-        .required {
-            color: #f44336;
-        }
-        
         @media (max-width: 600px) {
             .container {
                 padding: 30px 20px;
             }
             
-            .header h1 {
-                font-size: 24px;
+            .logo h1 {
+                font-size: 26px;
+            }
+            
+            .language-selector {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Contactez-nous</h1>
-            <p>Nous sommes là pour vous aider. Remplissez le formulaire ci-dessous.</p>
+        <div class="logo">
+            <h1>🌴 Palm Hôtel et Spa</h1>
+            <p>Votre oasis de détente</p>
         </div>
         
-        <form id="contactForm">
-            <div class="form-group">
-                <label for="name">Nom complet <span class="required">*</span></label>
-                <input type="text" id="name" name="name" placeholder="Jean Dupont" required>
+        <!-- Sélection de langue -->
+        <div id="languageSelection">
+            <div class="language-selector">
+                <div class="language-btn" onclick="selectLanguage('fr')">
+                    <div class="flag">🇫🇷</div>
+                    <div class="name">Français</div>
+                </div>
+                <div class="language-btn" onclick="selectLanguage('en')">
+                    <div class="flag">🇬🇧</div>
+                    <div class="name">English</div>
+                </div>
+                <div class="language-btn" onclick="selectLanguage('es')">
+                    <div class="flag">🇪🇸</div>
+                    <div class="name">Español</div>
+                </div>
+                <div class="language-btn" onclick="selectLanguage('de')">
+                    <div class="flag">🇩🇪</div>
+                    <div class="name">Deutsch</div>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="email">Adresse email <span class="required">*</span></label>
-                <input type="email" id="email" name="email" placeholder="jean.dupont@example.com" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="language">Langue préférée <span class="required">*</span></label>
-                <select id="language" name="language" required>
-                    <option value="">Sélectionnez une langue</option>
-                    <option value="fr">Français</option>
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                    <option value="de">Deutsch</option>
-                    <option value="it">Italiano</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="message">Votre message <span class="required">*</span></label>
-                <textarea id="message" name="message" placeholder="Décrivez votre demande en détail..." required></textarea>
-            </div>
-            
-            <button type="submit" id="submitBtn">Envoyer le message</button>
-        </form>
-        
-        <div class="success-message" id="successMessage">
-            ✓ Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.
         </div>
         
-        <div class="error-message" id="errorMessage">
-            ✗ Une erreur s'est produite. Veuillez réessayer.
+        <!-- Formulaire de message -->
+        <div id="messageForm" class="message-form">
+            <div class="header">
+                <h2 id="formTitle">Comment pouvons-nous vous aider ?</h2>
+                <p id="formSubtitle">Posez-nous votre question</p>
+            </div>
+            
+            <form id="contactForm">
+                <input type="hidden" id="selectedLanguage" name="language">
+                
+                <div class="form-group">
+                    <label for="message" id="messageLabel">Votre question</label>
+                    <textarea id="message" name="message" placeholder="Décrivez votre demande..." required></textarea>
+                </div>
+                
+                <button type="button" class="back-btn" onclick="backToLanguages()" id="backBtn">← Retour</button>
+                <button type="submit" id="submitBtn">Envoyer</button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                ✓ Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                ✗ Une erreur s'est produite. Veuillez réessayer.
+            </div>
         </div>
     </div>
 
     <script>
+        const translations = {
+            fr: {
+                title: "Comment pouvons-nous vous aider ?",
+                subtitle: "Posez-nous votre question",
+                label: "Votre question",
+                placeholder: "Décrivez votre demande...",
+                back: "← Retour",
+                submit: "Envoyer",
+                sending: "Envoi en cours...",
+                success: "✓ Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.",
+                error: "✗ Une erreur s'est produite. Veuillez réessayer."
+            },
+            en: {
+                title: "How can we help you?",
+                subtitle: "Ask us your question",
+                label: "Your question",
+                placeholder: "Describe your request...",
+                back: "← Back",
+                submit: "Send",
+                sending: "Sending...",
+                success: "✓ Your message has been sent successfully! We will respond soon.",
+                error: "✗ An error occurred. Please try again."
+            },
+            es: {
+                title: "¿Cómo podemos ayudarle?",
+                subtitle: "Háganos su pregunta",
+                label: "Su pregunta",
+                placeholder: "Describa su solicitud...",
+                back: "← Volver",
+                submit: "Enviar",
+                sending: "Enviando...",
+                success: "✓ ¡Su mensaje ha sido enviado con éxito! Le responderemos pronto.",
+                error: "✗ Se produjo un error. Por favor, inténtelo de nuevo."
+            },
+            de: {
+                title: "Wie können wir Ihnen helfen?",
+                subtitle: "Stellen Sie uns Ihre Frage",
+                label: "Ihre Frage",
+                placeholder: "Beschreiben Sie Ihre Anfrage...",
+                back: "← Zurück",
+                submit: "Senden",
+                sending: "Wird gesendet...",
+                success: "✓ Ihre Nachricht wurde erfolgreich gesendet! Wir werden bald antworten.",
+                error: "✗ Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+            }
+        };
+        
+        let currentLanguage = '';
+        
+        function selectLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('selectedLanguage').value = lang;
+            
+            // Mettre à jour les textes
+            const t = translations[lang];
+            document.getElementById('formTitle').textContent = t.title;
+            document.getElementById('formSubtitle').textContent = t.subtitle;
+            document.getElementById('messageLabel').textContent = t.label;
+            document.getElementById('message').placeholder = t.placeholder;
+            document.getElementById('backBtn').textContent = t.back;
+            document.getElementById('submitBtn').textContent = t.submit;
+            
+            // Afficher le formulaire
+            document.getElementById('languageSelection').style.display = 'none';
+            document.getElementById('messageForm').classList.add('active');
+        }
+        
+        function backToLanguages() {
+            document.getElementById('messageForm').classList.remove('active');
+            document.getElementById('languageSelection').style.display = 'block';
+            document.getElementById('contactForm').reset();
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+        
         document.getElementById('contactForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -215,12 +379,11 @@
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
             const form = e.target;
+            const t = translations[currentLanguage];
             
-            // Désactiver le bouton pendant l'envoi
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.textContent = t.sending;
             
-            // Cacher les messages précédents
             successMessage.style.display = 'none';
             errorMessage.style.display = 'none';
             
@@ -237,16 +400,19 @@
                 });
                 
                 if (response.ok) {
+                    successMessage.textContent = t.success;
                     successMessage.style.display = 'block';
                     form.reset();
                 } else {
+                    errorMessage.textContent = t.error;
                     errorMessage.style.display = 'block';
                 }
             } catch (error) {
+                errorMessage.textContent = t.error;
                 errorMessage.style.display = 'block';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Envoyer le message';
+                submitBtn.textContent = t.submit;
             }
         });
     </script>
