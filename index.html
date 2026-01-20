@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palm Hotel - Assistant IA</title>
+    <title>Palm Hotel & Spa - Conciergerie Virtuelle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,87 +13,123 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%);
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #0a4d68 0%, #088395 50%, #05bfdb 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-        }
-
-        .chat-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 600px;
-            height: 700px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chat-header {
-            background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%);
-            color: white;
-            padding: 25px;
-            text-align: center;
             position: relative;
         }
 
-        .chat-header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            font-weight: 600;
-            letter-spacing: 1px;
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x bottom;
+            pointer-events: none;
         }
 
-        .chat-header p {
-            font-size: 14px;
+        .chat-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 650px;
+            height: 750px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #0a4d68 0%, #088395 100%);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px solid #05bfdb;
+        }
+
+        .hotel-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hotel-tagline {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 2px;
             opacity: 0.95;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .chat-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 400;
+            margin-top: 10px;
         }
 
         .language-selector {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
         }
 
         .language-selector select {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 10px 15px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
             font-weight: 500;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+
+        .language-selector select:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .language-selector select option {
-            background: #d4af37;
+            background: #0a4d68;
             color: white;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 25px;
             overflow-y: auto;
-            background: #fafaf8;
+            background: linear-gradient(to bottom, #f8fafb 0%, #ffffff 100%);
         }
 
         .message {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
-            animation: fadeIn 0.3s ease-in;
+            animation: fadeIn 0.4s ease-in;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -109,41 +146,44 @@
         }
 
         .message-content {
-            max-width: 70%;
-            padding: 12px 18px;
-            border-radius: 18px;
+            max-width: 75%;
+            padding: 15px 20px;
+            border-radius: 20px;
             word-wrap: break-word;
-            line-height: 1.5;
+            line-height: 1.6;
+            font-size: 14.5px;
         }
 
         .user-message .message-content {
-            background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%);
+            background: linear-gradient(135deg, #088395 0%, #05bfdb 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(8, 131, 149, 0.3);
         }
 
         .bot-message .message-content {
             background: white;
-            color: #333;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.15);
-            border: 1px solid #f5f5f3;
+            color: #2c3e50;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8f4f8;
         }
 
         .typing-indicator {
             display: flex;
             align-items: center;
-            gap: 5px;
-            padding: 12px 18px;
+            gap: 6px;
+            padding: 15px 20px;
             background: white;
-            border-radius: 18px;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
             width: fit-content;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e8f4f8;
         }
 
         .typing-indicator span {
-            height: 8px;
-            width: 8px;
-            background: #d4af37;
+            height: 9px;
+            width: 9px;
+            background: #088395;
             border-radius: 50%;
             display: inline-block;
             animation: typing 1.4s infinite;
@@ -160,51 +200,56 @@
         @keyframes typing {
             0%, 60%, 100% {
                 transform: translateY(0);
-                opacity: 0.5;
+                opacity: 0.4;
             }
             30% {
-                transform: translateY(-10px);
+                transform: translateY(-12px);
                 opacity: 1;
             }
         }
 
         .chat-input {
-            padding: 20px;
+            padding: 25px;
             background: white;
-            border-top: 1px solid #f0f0ed;
+            border-top: 2px solid #e8f4f8;
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .chat-input input {
             flex: 1;
-            padding: 12px 18px;
-            border: 2px solid #e8e8e5;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 15px 22px;
+            border: 2px solid #e0e7eb;
+            border-radius: 30px;
+            font-size: 14.5px;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            font-family: 'Lato', sans-serif;
         }
 
         .chat-input input:focus {
-            border-color: #d4af37;
+            border-color: #088395;
+            box-shadow: 0 0 0 3px rgba(8, 131, 149, 0.1);
         }
 
         .chat-input button {
-            background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%);
+            background: linear-gradient(135deg, #088395 0%, #05bfdb 100%);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 15px 30px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(8, 131, 149, 0.3);
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 0.5px;
         }
 
         .chat-input button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 6px 20px rgba(8, 131, 149, 0.4);
         }
 
         .chat-input button:active {
@@ -218,20 +263,27 @@
         }
 
         .chat-messages::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
 
         .chat-messages::-webkit-scrollbar-track {
-            background: #f5f5f3;
+            background: #f1f5f7;
+            border-radius: 10px;
         }
 
         .chat-messages::-webkit-scrollbar-thumb {
-            background: #d4af37;
-            border-radius: 3px;
+            background: linear-gradient(135deg, #088395 0%, #05bfdb 100%);
+            border-radius: 10px;
         }
 
         .chat-messages::-webkit-scrollbar-thumb:hover {
-            background: #c9a961;
+            background: linear-gradient(135deg, #0a4d68 0%, #088395 100%);
+        }
+
+        .palm-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 28px;
         }
     </style>
 </head>
@@ -246,20 +298,23 @@
                     <option value="de">🇩🇪 Deutsch</option>
                 </select>
             </div>
-            <h1>🏨 PALM HOTEL</h1>
-            <p id="headerSubtitle">Assistant virtuel - Posez vos questions</p>
+            <div class="hotel-logo">
+                <span class="palm-icon">🌴</span>PALM HOTEL & SPA
+            </div>
+            <div class="hotel-tagline">Île de La Réunion</div>
+            <p class="chat-subtitle" id="headerSubtitle">Conciergerie Virtuelle</p>
         </div>
         
         <div class="chat-messages" id="chatMessages">
             <div class="message bot-message">
                 <div class="message-content" id="welcomeMessage">
-                    Bonjour ! Je suis l'assistant virtuel du Palm Hotel. Comment puis-je vous aider aujourd'hui ?
+                    Bienvenue au Palm Hotel & Spa ! Je suis votre concierge virtuel. Comment puis-je vous assister aujourd'hui ?
                 </div>
             </div>
         </div>
         
         <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Tapez votre message..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="userInput" placeholder="Posez votre question..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()" id="sendButton">Envoyer</button>
         </div>
     </div>
@@ -267,32 +322,32 @@
     <script>
         const translations = {
             fr: {
-                headerSubtitle: "Assistant virtuel - Posez vos questions",
-                welcomeMessage: "Bonjour ! Je suis l'assistant virtuel du Palm Hotel. Comment puis-je vous aider aujourd'hui ?",
-                placeholder: "Tapez votre message...",
+                headerSubtitle: "Conciergerie Virtuelle",
+                welcomeMessage: "Bienvenue au Palm Hotel & Spa ! Je suis votre concierge virtuel. Comment puis-je vous assister aujourd'hui ?",
+                placeholder: "Posez votre question...",
                 sendButton: "Envoyer",
-                errorMessage: "Désolé, une erreur s'est produite. Veuillez réessayer dans quelques instants."
+                errorMessage: "Nous rencontrons actuellement un problème technique. Veuillez réessayer dans quelques instants ou contacter notre réception."
             },
             en: {
-                headerSubtitle: "Virtual Assistant - Ask your questions",
-                welcomeMessage: "Hello! I'm the Palm Hotel virtual assistant. How can I help you today?",
-                placeholder: "Type your message...",
+                headerSubtitle: "Virtual Concierge",
+                welcomeMessage: "Welcome to Palm Hotel & Spa! I'm your virtual concierge. How may I assist you today?",
+                placeholder: "Ask your question...",
                 sendButton: "Send",
-                errorMessage: "Sorry, an error occurred. Please try again in a few moments."
+                errorMessage: "We are currently experiencing a technical issue. Please try again in a few moments or contact our reception."
             },
             es: {
-                headerSubtitle: "Asistente Virtual - Haga sus preguntas",
-                welcomeMessage: "¡Hola! Soy el asistente virtual del Palm Hotel. ¿Cómo puedo ayudarle hoy?",
-                placeholder: "Escriba su mensaje...",
+                headerSubtitle: "Conserjería Virtual",
+                welcomeMessage: "¡Bienvenido al Palm Hotel & Spa! Soy su conserje virtual. ¿Cómo puedo ayudarle hoy?",
+                placeholder: "Haga su pregunta...",
                 sendButton: "Enviar",
-                errorMessage: "Lo siento, se produjo un error. Por favor, inténtelo de nuevo en unos momentos."
+                errorMessage: "Actualmente estamos experimentando un problema técnico. Por favor, inténtelo de nuevo en unos momentos o contacte con nuestra recepción."
             },
             de: {
-                headerSubtitle: "Virtueller Assistent - Stellen Sie Ihre Fragen",
-                welcomeMessage: "Hallo! Ich bin der virtuelle Assistent des Palm Hotels. Wie kann ich Ihnen heute helfen?",
-                placeholder: "Geben Sie Ihre Nachricht ein...",
+                headerSubtitle: "Virtueller Concierge",
+                welcomeMessage: "Willkommen im Palm Hotel & Spa! Ich bin Ihr virtueller Concierge. Wie kann ich Ihnen heute helfen?",
+                placeholder: "Stellen Sie Ihre Frage...",
                 sendButton: "Senden",
-                errorMessage: "Entschuldigung, es ist ein Fehler aufgetreten. Bitte versuchen Sie es in einigen Augenblicken erneut."
+                errorMessage: "Wir haben derzeit ein technisches Problem. Bitte versuchen Sie es in einigen Augenblicken erneut oder kontaktieren Sie unsere Rezeption."
             }
         };
 
