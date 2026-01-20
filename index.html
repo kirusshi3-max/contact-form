@@ -1,4 +1,5 @@
 
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -208,12 +209,47 @@
             }
         }
 
+        .new-question-button {
+            display: none;
+            justify-content: center;
+            padding: 15px 25px;
+            margin: 10px 25px;
+        }
+
+        .new-question-button.show {
+            display: flex;
+        }
+
+        .new-question-button button {
+            background: linear-gradient(135deg, #0a4d68 0%, #088395 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(10, 77, 104, 0.3);
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .new-question-button button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 77, 104, 0.4);
+        }
+
         .chat-input {
             padding: 25px;
             background: white;
             border-top: 2px solid #e8f4f8;
             display: flex;
             gap: 12px;
+        }
+
+        .chat-input.hidden {
+            display: none;
         }
 
         .chat-input input {
@@ -312,8 +348,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="new-question-button" id="newQuestionButton">
+            <button onclick="resetConversation()">
+                🔄 Nouvelle Question
+            </button>
+        </div>
         
-        <div class="chat-input">
+        <div class="chat-input" id="chatInput">
             <input type="text" id="userInput" placeholder="Posez votre question..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()" id="sendButton">Envoyer</button>
         </div>
@@ -326,6 +368,7 @@
                 welcomeMessage: "Bienvenue au Palm Hotel & Spa ! Je suis votre concierge virtuel. Comment puis-je vous assister aujourd'hui ?",
                 placeholder: "Posez votre question...",
                 sendButton: "Envoyer",
+                newQuestionButton: "🔄 Nouvelle Question",
                 errorMessage: "Nous rencontrons actuellement un problème technique. Veuillez réessayer dans quelques instants ou contacter notre réception."
             },
             en: {
@@ -333,6 +376,7 @@
                 welcomeMessage: "Welcome to Palm Hotel & Spa! I'm your virtual concierge. How may I assist you today?",
                 placeholder: "Ask your question...",
                 sendButton: "Send",
+                newQuestionButton: "🔄 New Question",
                 errorMessage: "We are currently experiencing a technical issue. Please try again in a few moments or contact our reception."
             },
             es: {
@@ -340,6 +384,7 @@
                 welcomeMessage: "¡Bienvenido al Palm Hotel & Spa! Soy su conserje virtual. ¿Cómo puedo ayudarle hoy?",
                 placeholder: "Haga su pregunta...",
                 sendButton: "Enviar",
+                newQuestionButton: "🔄 Nueva Pregunta",
                 errorMessage: "Actualmente estamos experimentando un problema técnico. Por favor, inténtelo de nuevo en unos momentos o contacte con nuestra recepción."
             },
             de: {
@@ -347,11 +392,18 @@
                 welcomeMessage: "Willkommen im Palm Hotel & Spa! Ich bin Ihr virtueller Concierge. Wie kann ich Ihnen heute helfen?",
                 placeholder: "Stellen Sie Ihre Frage...",
                 sendButton: "Senden",
+                newQuestionButton: "🔄 Neue Frage",
                 errorMessage: "Wir haben derzeit ein technisches Problem. Bitte versuchen Sie es in einigen Augenblicken erneut oder kontaktieren Sie unsere Rezeption."
             }
         };
 
         let currentLanguage = 'fr';
+        let sessionId = generateSessionId();
+        let conversationActive = false;
+
+        function generateSessionId() {
+            return 'web_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
 
         function changeLanguage() {
             const select = document.getElementById('languageSelect');
@@ -361,6 +413,36 @@
             document.getElementById('welcomeMessage').textContent = translations[currentLanguage].welcomeMessage;
             document.getElementById('userInput').placeholder = translations[currentLanguage].placeholder;
             document.getElementById('sendButton').textContent = translations[currentLanguage].sendButton;
+            
+            const newQuestionBtn = document.querySelector('.new-question-button button');
+            if (newQuestionBtn) {
+                newQuestionBtn.textContent = translations[currentLanguage].newQuestionButton;
+            }
+        }
+
+        function resetConversation() {
+            // Générer un nouveau sessionId
+            sessionId = generateSessionId();
+            conversationActive = false;
+            
+            // Effacer tous les messages sauf le message de bienvenue
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="message bot-message">
+                    <div class="message-content" id="welcomeMessage">
+                        ${translations[currentLanguage].welcomeMessage}
+                    </div>
+                </div>
+            `;
+            
+            // Masquer le bouton "Nouvelle Question"
+            document.getElementById('newQuestionButton').classList.remove('show');
+            
+            // Afficher le formulaire de saisie
+            document.getElementById('chatInput').classList.remove('hidden');
+            
+            // Focus sur l'input
+            document.getElementById('userInput').focus();
         }
 
         function addMessage(text, sender) {
@@ -416,7 +498,12 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify({ 
+                        message: message,
+                        sessionId: sessionId,
+                        channel: 'web',
+                        timestamp: new Date().toISOString()
+                    })
                 });
                 
                 if (!response.ok) {
@@ -429,6 +516,15 @@
                 
                 if (data.response) {
                     addMessage(data.response, 'bot');
+                    
+                    // Marquer la conversation comme active
+                    conversationActive = true;
+                    
+                    // Masquer le formulaire de saisie
+                    document.getElementById('chatInput').classList.add('hidden');
+                    
+                    // Afficher le bouton "Nouvelle Question"
+                    document.getElementById('newQuestionButton').classList.add('show');
                 } else {
                     addMessage(translations[currentLanguage].errorMessage, 'bot');
                 }
@@ -440,7 +536,6 @@
             } finally {
                 sendButton.disabled = false;
                 input.disabled = false;
-                input.focus();
             }
         }
 
