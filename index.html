@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palm Hôtel et Spa - Contact</title>
+    <title>Palm Hôtel & Spa - Contact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,8 +15,8 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 100%);
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0a3d2c 0%, #165a42 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,81 +25,106 @@
         }
         
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
+            background: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+            max-width: 550px;
             width: 100%;
-            padding: 40px;
-            animation: slideIn 0.5s ease-out;
+            overflow: hidden;
         }
         
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .logo {
+        .header-banner {
+            background: linear-gradient(135deg, #0a3d2c 0%, #165a42 100%);
+            padding: 40px 30px;
             text-align: center;
-            margin-bottom: 30px;
+            position: relative;
         }
         
-        .logo h1 {
-            color: #1a5f3f;
-            font-size: 32px;
-            margin-bottom: 5px;
+        .logo-container {
+            margin-bottom: 15px;
+        }
+        
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 42px;
             font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        .logo p {
-            color: #2d8659;
+        .logo-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
             font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 4px;
             font-style: italic;
+            margin-top: 10px;
+            opacity: 0.95;
+        }
+        
+        .palm-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .content-area {
+            padding: 40px;
         }
         
         .language-selector {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 0;
         }
         
         .language-btn {
-            background: white;
-            border: 3px solid #e0e0e0;
-            border-radius: 15px;
-            padding: 20px;
+            background: #ffffff;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 25px 15px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
         }
         
         .language-btn:hover {
-            border-color: #2d8659;
+            border-color: #d4af37;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(45, 134, 89, 0.2);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
         }
         
         .language-btn.selected {
-            border-color: #1a5f3f;
-            background: #f0f8f4;
+            border-color: #0a3d2c;
+            background: #f8f9f5;
         }
         
         .language-btn .flag {
-            font-size: 48px;
-            margin-bottom: 10px;
+            font-size: 52px;
+            margin-bottom: 12px;
+            display: block;
         }
         
         .language-btn .name {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            color: #333;
+            color: #0a3d2c;
+            font-family: 'Montserrat', sans-serif;
         }
         
         .message-form {
@@ -111,74 +139,89 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
         
-        .header {
+        .form-header {
             text-align: center;
             margin-bottom: 30px;
         }
         
-        .header h2 {
-            color: #1a5f3f;
-            font-size: 24px;
+        .form-header h2 {
+            font-family: 'Playfair Display', serif;
+            color: #0a3d2c;
+            font-size: 26px;
             margin-bottom: 10px;
+            font-weight: 600;
         }
         
-        .header p {
+        .form-header p {
             color: #666;
             font-size: 14px;
+            font-weight: 300;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         label {
             display: block;
-            color: #333;
+            color: #0a3d2c;
             font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         textarea {
             width: 100%;
             padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border: 2px solid #e8e8e8;
+            border-radius: 4px;
             font-size: 15px;
             transition: all 0.3s ease;
-            font-family: inherit;
+            font-family: 'Montserrat', sans-serif;
             resize: vertical;
-            min-height: 150px;
+            min-height: 160px;
+            color: #333;
         }
         
         textarea:focus {
             outline: none;
-            border-color: #2d8659;
-            box-shadow: 0 0 0 3px rgba(45, 134, 89, 0.1);
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        
+        textarea::placeholder {
+            color: #999;
         }
         
         button {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #1a5f3f 0%, #2d8659 100%);
-            color: white;
+            padding: 16px;
+            background: linear-gradient(135deg, #0a3d2c 0%, #165a42 100%);
+            color: #ffffff;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 4px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
         }
         
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(26, 95, 63, 0.3);
+            box-shadow: 0 12px 25px rgba(10, 61, 44, 0.3);
         }
         
         button:active {
@@ -191,45 +234,68 @@
         }
         
         .back-btn {
-            background: #e0e0e0;
-            color: #333;
+            background: #f5f5f5;
+            color: #0a3d2c;
             margin-bottom: 15px;
+            border: 2px solid #e8e8e8;
         }
         
         .back-btn:hover {
-            background: #d0d0d0;
+            background: #e8e8e8;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .success-message {
             display: none;
-            background: #4CAF50;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
+            background: #0a3d2c;
+            color: #d4af37;
+            padding: 18px;
+            border-radius: 4px;
             text-align: center;
             margin-top: 20px;
+            font-weight: 500;
             animation: slideIn 0.5s ease-out;
         }
         
         .error-message {
             display: none;
-            background: #f44336;
+            background: #8b0000;
             color: white;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 18px;
+            border-radius: 4px;
             text-align: center;
             margin-top: 20px;
+            font-weight: 500;
             animation: slideIn 0.5s ease-out;
         }
         
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         @media (max-width: 600px) {
-            .container {
+            .content-area {
+                padding: 30px 25px;
+            }
+            
+            .header-banner {
                 padding: 30px 20px;
             }
             
-            .logo h1 {
-                font-size: 26px;
+            .logo-text {
+                font-size: 32px;
+            }
+            
+            .tagline {
+                font-size: 14px;
+                letter-spacing: 3px;
             }
             
             .language-selector {
@@ -240,58 +306,64 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <h1>🌴 Palm Hôtel et Spa</h1>
-            <p>Votre oasis de détente</p>
-        </div>
-        
-        <!-- Sélection de langue -->
-        <div id="languageSelection">
-            <div class="language-selector">
-                <div class="language-btn" onclick="selectLanguage('fr')">
-                    <div class="flag">🇫🇷</div>
-                    <div class="name">Français</div>
-                </div>
-                <div class="language-btn" onclick="selectLanguage('en')">
-                    <div class="flag">🇬🇧</div>
-                    <div class="name">English</div>
-                </div>
-                <div class="language-btn" onclick="selectLanguage('es')">
-                    <div class="flag">🇪🇸</div>
-                    <div class="name">Español</div>
-                </div>
-                <div class="language-btn" onclick="selectLanguage('de')">
-                    <div class="flag">🇩🇪</div>
-                    <div class="name">Deutsch</div>
-                </div>
+        <div class="header-banner">
+            <div class="logo-container">
+                <div class="palm-icon">🌴</div>
+                <div class="logo-text">PALM</div>
+                <div class="logo-subtitle">Hôtel & Spa</div>
+                <div class="tagline">ÉLÉGANCE & SÉRÉNITÉ</div>
             </div>
         </div>
         
-        <!-- Formulaire de message -->
-        <div id="messageForm" class="message-form">
-            <div class="header">
-                <h2 id="formTitle">Comment pouvons-nous vous aider ?</h2>
-                <p id="formSubtitle">Posez-nous votre question</p>
+        <div class="content-area">
+            <!-- Sélection de langue -->
+            <div id="languageSelection">
+                <div class="language-selector">
+                    <div class="language-btn" onclick="selectLanguage('fr')">
+                        <span class="flag">🇫🇷</span>
+                        <div class="name">Français</div>
+                    </div>
+                    <div class="language-btn" onclick="selectLanguage('en')">
+                        <span class="flag">🇬🇧</span>
+                        <div class="name">English</div>
+                    </div>
+                    <div class="language-btn" onclick="selectLanguage('es')">
+                        <span class="flag">🇪🇸</span>
+                        <div class="name">Español</div>
+                    </div>
+                    <div class="language-btn" onclick="selectLanguage('de')">
+                        <span class="flag">🇩🇪</span>
+                        <div class="name">Deutsch</div>
+                    </div>
+                </div>
             </div>
             
-            <form id="contactForm">
-                <input type="hidden" id="selectedLanguage" name="language">
-                
-                <div class="form-group">
-                    <label for="message" id="messageLabel">Votre question</label>
-                    <textarea id="message" name="message" placeholder="Décrivez votre demande..." required></textarea>
+            <!-- Formulaire de message -->
+            <div id="messageForm" class="message-form">
+                <div class="form-header">
+                    <h2 id="formTitle">Comment pouvons-nous vous aider ?</h2>
+                    <p id="formSubtitle">Posez-nous votre question</p>
                 </div>
                 
-                <button type="button" class="back-btn" onclick="backToLanguages()" id="backBtn">← Retour</button>
-                <button type="submit" id="submitBtn">Envoyer</button>
-            </form>
-            
-            <div class="success-message" id="successMessage">
-                ✓ Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.
-            </div>
-            
-            <div class="error-message" id="errorMessage">
-                ✗ Une erreur s'est produite. Veuillez réessayer.
+                <form id="contactForm">
+                    <input type="hidden" id="selectedLanguage" name="language">
+                    
+                    <div class="form-group">
+                        <label for="message" id="messageLabel">Votre question</label>
+                        <textarea id="message" name="message" placeholder="Décrivez votre demande..." required></textarea>
+                    </div>
+                    
+                    <button type="button" class="back-btn" onclick="backToLanguages()" id="backBtn">← Retour</button>
+                    <button type="submit" id="submitBtn">Envoyer</button>
+                </form>
+                
+                <div class="success-message" id="successMessage">
+                    ✓ Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.
+                </div>
+                
+                <div class="error-message" id="errorMessage">
+                    ✗ Une erreur s'est produite. Veuillez réessayer.
+                </div>
             </div>
         </div>
     </div>
@@ -350,7 +422,6 @@
             currentLanguage = lang;
             document.getElementById('selectedLanguage').value = lang;
             
-            // Mettre à jour les textes
             const t = translations[lang];
             document.getElementById('formTitle').textContent = t.title;
             document.getElementById('formSubtitle').textContent = t.subtitle;
@@ -359,7 +430,6 @@
             document.getElementById('backBtn').textContent = t.back;
             document.getElementById('submitBtn').textContent = t.submit;
             
-            // Afficher le formulaire
             document.getElementById('languageSelection').style.display = 'none';
             document.getElementById('messageForm').classList.add('active');
         }
